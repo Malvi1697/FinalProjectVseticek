@@ -40,6 +40,59 @@ class Record:
             else:
                 print(error_text)
 
+    @staticmethod
+    def list_users(database: List[Dict[str, str]]) -> None:
+        """
+        Retrieve and display all insured persons from the in-memory database.
+
+        :param database: A list of dictionaries to store user records.
+        """
+        for user in database:
+            print(f"{user['first_name']}\t{user['last_name']}\t{user['age']}\t{user['phone_number']}")
+        input("Press ENTER to continue...")
+
+
+    def add_user(self, database: List[Dict[str, str]]) -> None:
+        """
+        Collect information from the user and add a new insured person to the in-memory database.
+
+        :param database: A list of dictionaries to store user records.
+        """
+        self.first_name = self.prompt_for_text("Enter the first name of the insured person: ",
+                                               "Invalid input! Name must contain only letters.")
+        self.last_name = self.prompt_for_text("Enter the last name: ",
+                                              "Invalid input! Last name must contain only letters.")
+        self.age = self.prompt_for_number("Enter age: ", "Invalid input! Age must be a number.")
+        self.phone_number = self.prompt_for_text("Enter phone number: ",
+                                                 "Invalid input! Phone number must be a string.")
+
+        new_user = {
+            'first_name': self.first_name,
+            'last_name': self.last_name,
+            'age': self.age,
+            'phone_number': self.phone_number
+        }
+        database.append(new_user)
+        input("Data has been saved. Press ENTER to continue...")
+
+    def search_user(self, database: List[Dict[str, str]]) -> None:
+        """
+        Search for an insured person in the in-memory database using their first and last name.
+
+        :param database: A list of dictionaries to store user records.
+        """
+        first_name = self.prompt_for_text("Enter the first name of the insured person: ",
+                                          "Invalid input! Name must contain only letters.")
+        last_name = self.prompt_for_text("Enter the last name: ", "Invalid input! Last name must contain only letters.")
+
+        found_users = [user for user in database if user['first_name'] == first_name and user['last_name'] == last_name]
+        for user in found_users:
+            print(f"{user['first_name']}\t{user['last_name']}\t{user['age']}\t{user['phone_number']}")
+        if not found_users:
+            print("No users found.")
+        input("Press ENTER to continue...")
+
+
     def display_menu(self, database: List[Dict[str, str]]) -> None:
         """
         Present a menu of actions for the user to choose from.
@@ -69,57 +122,6 @@ class Record:
                 break
             else:
                 print("Invalid choice! Please select a valid option.")
-
-    def add_user(self, database: List[Dict[str, str]]) -> None:
-        """
-        Collect information from the user and add a new insured person to the in-memory database.
-
-        :param database: A list of dictionaries to store user records.
-        """
-        self.first_name = self.prompt_for_text("Enter the first name of the insured person: ",
-                                               "Invalid input! Name must contain only letters.")
-        self.last_name = self.prompt_for_text("Enter the last name: ",
-                                              "Invalid input! Last name must contain only letters.")
-        self.age = self.prompt_for_number("Enter age: ", "Invalid input! Age must be a number.")
-        self.phone_number = self.prompt_for_text("Enter phone number: ",
-                                                 "Invalid input! Phone number must be a string.")
-
-        new_user = {
-            'first_name': self.first_name,
-            'last_name': self.last_name,
-            'age': self.age,
-            'phone_number': self.phone_number
-        }
-        database.append(new_user)
-        input("Data has been saved. Press ENTER to continue...")
-
-    @staticmethod
-    def list_users(database: List[Dict[str, str]]) -> None:
-        """
-        Retrieve and display all insured persons from the in-memory database.
-
-        :param database: A list of dictionaries to store user records.
-        """
-        for user in database:
-            print(f"{user['first_name']}\t{user['last_name']}\t{user['age']}\t{user['phone_number']}")
-        input("Press ENTER to continue...")
-
-    def search_user(self, database: List[Dict[str, str]]) -> None:
-        """
-        Search for an insured person in the in-memory database using their first and last name.
-
-        :param database: A list of dictionaries to store user records.
-        """
-        first_name = self.prompt_for_text("Enter the first name of the insured person: ",
-                                          "Invalid input! Name must contain only letters.")
-        last_name = self.prompt_for_text("Enter the last name: ", "Invalid input! Last name must contain only letters.")
-
-        found_users = [user for user in database if user['first_name'] == first_name and user['last_name'] == last_name]
-        for user in found_users:
-            print(f"{user['first_name']}\t{user['last_name']}\t{user['age']}\t{user['phone_number']}")
-        if not found_users:
-            print("No users found.")
-        input("Press ENTER to continue...")
 
     def run(self, database: List[Dict[str, str]]) -> None:
         """
