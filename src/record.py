@@ -93,7 +93,8 @@ class Record:
         database.append(new_user)
         input("Data has been saved. Press ENTER to continue...")
 
-    def list_users(self, database: List[Dict[str, str]]) -> None:
+    @staticmethod
+    def list_users(database: List[Dict[str, str]]) -> None:
         """
         Retrieve and display all insured persons from the in-memory database.
 
